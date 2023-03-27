@@ -1,4 +1,4 @@
-import Axios, { AxiosError, AxiosRequestConfig } from "axios";
+import Axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { environment } from "../../environment";
 import { InterceptorService } from "../../shared/services/InterceptorService";
 
@@ -9,12 +9,12 @@ interceptorService.addRequestInterceptor().addResponseInterceptor();
 export const baseInstance = <T>(config: AxiosRequestConfig): Promise<T> => {
   const source = Axios.CancelToken.source();
   const promise = AXIOS_INSTANCE({ ...config, cancelToken: source.token }).then(
-    ({ data }) => data
+    ({ data }) => data,
   );
 
   // @ts-ignore
   promise.cancel = () => {
-    source.cancel("Query was cancelled by React Query");
+    source.cancel('Query was cancelled by React Query');
   };
 
   return promise;

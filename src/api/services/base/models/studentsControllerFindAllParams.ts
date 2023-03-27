@@ -7,6 +7,6 @@
  */
 
 export type StudentsControllerFindAllParams = {
-skip?: number;
-take?: number;
+  skip?: number;
+  take?: number;
 };

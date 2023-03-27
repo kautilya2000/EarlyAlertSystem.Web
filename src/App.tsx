@@ -1,13 +1,16 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import DenseAppBar from "./layout/NavBar";
-import DetailsTable from "./services/DetailsTable";
+import { Route, Routes } from "react-router-dom";
+import { PageRoutes } from "./routes";
 
 function App() {
   return (
     <DenseAppBar>
-      <DetailsTable />
+      <Routes>
+        {PageRoutes.map(({ path, Component }) => (
+          <Route key={path} path={path} element={<Component />} />
+        ))}
+      </Routes>
     </DenseAppBar>
   );
 }

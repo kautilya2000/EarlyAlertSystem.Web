@@ -5,58 +5,54 @@
  * The EAS API description
  * OpenAPI spec version: 0.1
  */
-import {
-  useQuery
-} from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 import type {
   UseQueryOptions,
   QueryFunction,
   UseQueryResult,
-  QueryKey
-} from '@tanstack/react-query'
-import { baseInstance } from '../../instances/baseInstance';
-import type { ErrorType } from '../../instances/baseInstance';
+  QueryKey,
+} from "@tanstack/react-query";
+import { baseInstance } from "../../instances/baseInstance";
+import type { ErrorType } from "../../instances/baseInstance";
 
-
-
-export const appControllerGetHello = (
-    
- signal?: AbortSignal
-) => {
-      return baseInstance<void>(
-      {url: `/`, method: 'get', signal
-    },
-      );
-    }
-  
+export const appControllerGetHello = (signal?: AbortSignal) => {
+  return baseInstance<void>({ url: `/`, method: "get", signal });
+};
 
 export const getAppControllerGetHelloQueryKey = () => [`/`];
 
-    
-export type AppControllerGetHelloQueryResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHello>>>
-export type AppControllerGetHelloQueryError = ErrorType<unknown>
+export type AppControllerGetHelloQueryResult = NonNullable<
+  Awaited<ReturnType<typeof appControllerGetHello>>
+>;
+export type AppControllerGetHelloQueryError = ErrorType<unknown>;
 
-export const useAppControllerGetHello = <TData = Awaited<ReturnType<typeof appControllerGetHello>>, TError = ErrorType<unknown>>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>, }
+export const useAppControllerGetHello = <
+  TData = Awaited<ReturnType<typeof appControllerGetHello>>,
+  TError = ErrorType<unknown>
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof appControllerGetHello>>,
+    TError,
+    TData
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions } = options ?? {};
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryKey = queryOptions?.queryKey ?? getAppControllerGetHelloQueryKey();
 
-  const {query: queryOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof appControllerGetHello>>
+  > = ({ signal }) => appControllerGetHello(signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getAppControllerGetHelloQueryKey();
-
-  
-
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof appControllerGetHello>>> = ({ signal }) => appControllerGetHello(signal);
-
-
-  
-
-  const query = useQuery<Awaited<ReturnType<typeof appControllerGetHello>>, TError, TData>({ queryKey, queryFn, ...queryOptions}) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery<
+    Awaited<ReturnType<typeof appControllerGetHello>>,
+    TError,
+    TData
+  >({ queryKey, queryFn, ...queryOptions }) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
   query.queryKey = queryKey;
 
   return query;
-}
-
+};
